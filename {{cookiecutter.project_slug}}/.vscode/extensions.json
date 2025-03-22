@@ -1,0 +1,31 @@
+// This file tells VS Code to recommend certain extensions when someone opens the project
+// To manually generate it: code --list-extensions | ForEach-Object { "    `"$($_)`"," } | Out-File -Encoding utf8 .vscode/extensions.json
+
+{
+    "recommendations": [
+        "ms-python.python", //Python support: linting, IntelliSense, formatting
+        "streetsidesoftware.code-spell-checker", //Fast language server (Pylance)
+        "njpwerner.autodocstring","mikestead.dotenv", //Ruff linter integration
+        "wholroyd.jinja", //Auto-generate docstrings
+        "ms-toolsai.jupyter", //Support for .env files
+        "ms-python.vscode-pylance", //Jinja template syntax highlighting
+        "kevinrose.vsc-python-indent", //Full Jupyter Notebook support
+        "tamasfe.even-better-toml", //Smart indentation for Python
+        "github.vscode-github-actions", //TOML file support (used in pyproject.toml)
+        "github.copilot", //GitHub Copilot, PRs, Chat, etc.
+        "github.copilot-chat", //Enhanced Git support
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "visualstudioexptteam.vscodeintellicode",
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.jupyter-renderers",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        "docsmsft.docs-authoring-pack",
+        "ms-vsliveshare.vsliveshare",
+        "ms-vscode.makefile-tools",
+        "davidanson.vscode-markdownlint", //Linting for Markdown
+        "christian-kohler.path-intellisense", //Autocomplete for file paths
+        "charliermarsh.ruff",
+        "timonwong.shellcheck"
+    ]
+}

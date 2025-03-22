@@ -1,0 +1,11 @@
+// Tells VSC to use unittest, where to look for test files and show verbosity
+
+{
+    "python.testing.unittestArgs": [
+      "-v",
+      "-s",
+      "./tests",
+      "-p",
+      "*test.py"
+    ],
+}

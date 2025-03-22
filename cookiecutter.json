@@ -1,0 +1,15 @@
+{
+    "project_name": "Cookiecutter API Template",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+    "package_name": "{{ cookiecutter.project_slug }}",
+    "cli_command": "{{ cookiecutter.project_slug.replace('_', '-') }}",
+    "description": "Brief description of the project",
+    "author": "Colomé Sanz, Ferran ",
+    "email": "ferrancolomsanz@gmail.com",
+    "license": ["MIT", "BSD-3-Clause", "Apache-2.0", "GPL-3.0"],
+    "version": "0.1.0",
+    "python_version": "3.10.7",
+    "use_jupyter": "y",
+    "use_dvc": "n",
+    "use_docker": "y"
+  }
