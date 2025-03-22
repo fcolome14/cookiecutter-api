@@ -5,8 +5,6 @@
 
 ### Running the Application
 
-The application can be started by running the command ``python src/main.py``.
-
 To run the application this project offers several options:
 
 1. **Docker Compose**: The application can be run in a containerized environment using Docker Compose:
@@ -23,7 +21,12 @@ To run the application this project offers several options:
 3. **Manually**: The application can be run via Python script entrypoint:
 
     ```shell
-    python src/main.py
+    python {{cookiecutter.project_slug.lower()}}/__main__.py
+    ```
+    or as a module:
+
+    ```shell
+    python -m {{cookiecutter.project_slug.lower()}}
     ```
 
 ## Project Setup and Tooling
@@ -50,6 +53,7 @@ cd {{ cookiecutter.project_slug }}
   * Or use GitHub Codespaces to launch the containerized environment online.
 
 * Option 2: Virtual Environment (Manual):
+
 ```shell
 python -m venv .venv
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
@@ -105,6 +109,29 @@ ANY_OTHER_SECRET=other_secret
 > .env is automatically excluded from Git via .gitignore.
 > Load it in Python with the python-dotenv package.
 
+#### GitHub Secrets (Environment Variables)
+To keep sensitive configuration values secure (like API keys or tokens), define GitHub secrets:
+1. Go to {{ cookiecutter.project_name }} GitHub repo: Settings → Secrets and variables → Actions
+2. Click "New repository secret"
+1. Add the required variables, for example:
+
+    | Name              | Purpose                                                    |
+    |-------------------|------------------------------------------------------------|
+    | `GITHUB_TOKEN`    | Default GitHub Actions token (auto-provided)               |
+
+    > These secrets will be available inside your workflows as $GITHUB_ENV, $GITHUB_TOKEN, or ${{ secrets.YOUR_SECRET_NAME }}.
+
+### CI/CD with GitHub Actions
+This project comes pre-configured with multiple GitHub Actions workflows located under `.github/workflows/`:
+
+| Workflow          | Description                                                           |
+|-------------------|-----------------------------------------------------------------------|
+| `qa.yml`          | Runs tests and linting on every push to validate code quality         |
+| `pre-release.yml` | Optional tasks before creating a release (e.g., check changelog, bump)|
+| `post-release.yml`| Runs after a release is published (e.g., deploy docs, update tags)    |
+
+> These workflows are triggered automatically when changes are pushed to the main branch,
+>or tags/releases are created.
 
 ### Running Tests
 

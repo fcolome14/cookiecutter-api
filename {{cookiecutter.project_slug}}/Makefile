@@ -76,33 +76,27 @@ lint:
 
 # Run all tests
 tests:
-	$(PROJECT) wait-api $(FEDDIT_API_BASE_URL)
 	pytest -v tests
 
 tests-basic:
-	$(PROJECT) wait-api $(FEDDIT_API_BASE_URL)
 	pytest -v tests/unit tests/integration
 
 tests-e2e:
-	$(PROJECT) wait-api $(FEDDIT_API_BASE_URL)
 	pytest -v tests/e2e
 
 cov:
-	$(PROJECT) wait-api $(FEDDIT_API_BASE_URL)
 	coverage run --source $(PROJECT) -m pytest tests --junit-xml=test_result.xml
 	coverage report -m
 	coverage html
 	coverage xml
 
 cov-basic:
-	$(PROJECT) wait-api $(FEDDIT_API_BASE_URL)
 	coverage run --omit=$(PROJECT)/scripts/*,*/__init__.py,$(PROJECT)/__main__.py --source $(PROJECT) -m pytest tests/unit tests/integration --junit-xml=test_result.xml
 	coverage report -m
 	coverage html
 	coverage xml
 
 run:
-	$(PROJECT) wait-api $(FEDDIT_API_BASE_URL)
 	$(PROJECT) serve --host 0.0.0.0 --port $(API_PORT)
 
 # Build & starts Docker containers
