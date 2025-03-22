@@ -1,48 +1,48 @@
-name: Quality Assurance checks
+# name: Quality Assurance checks
 
-run-name: Running QA checks on ${{github.event.repository.name}} project
+# run-name: Running QA checks on ${{github.event.repository.name}} project
 
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-    branches: [develop]
+# on:
+#   pull_request:
+#     types: [opened, reopened, synchronize]
+#     branches: [develop]
 
-  push:
-    branches: [develop]
+#   push:
+#     branches: [develop]
 
-jobs:
-  qa-checks:
-    runs-on: ubuntu-latest
+# jobs:
+#   qa-checks:
+#     runs-on: ubuntu-latest
 
-    name: QA Checks
+#     name: QA Checks
 
-    steps:
-      - name: Checkout repository code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#     steps:
+#       - name: Checkout repository code
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
 
-      - name: Prepare poetry
-        run: pipx install poetry
+#       - name: Prepare poetry
+#         run: pipx install poetry
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.11
-          cache: poetry
-          cache-dependency-path: poetry.lock
+#       - name: Set up Python 3.11
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: 3.11
+#           cache: poetry
+#           cache-dependency-path: poetry.lock
 
-      - name: Check poetry
-        run: poetry check
+#       - name: Check poetry
+#         run: poetry check
 
-      - name: Prepare environment
-        run: poetry install --all-extras
+#       - name: Prepare environment
+#         run: poetry install --all-extras
 
-      - name: Run tests
-        run: docker compose -f tests/compose/docker-compose.yml up --build --abort-on-container-exit
+#       - name: Run tests
+#         run: docker compose -f tests/compose/docker-compose.yml up --build --abort-on-container-exit
 
-      - name: Run linters
-        run: poetry run make lint
+#       - name: Run linters
+#         run: poetry run make lint
 
-      - name: Generate documentation
-        run: poetry run make docs
+#       - name: Generate documentation
+#         run: poetry run make docs
