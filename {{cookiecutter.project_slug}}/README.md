@@ -119,7 +119,7 @@ To keep sensitive configuration values secure (like API keys or tokens), define 
     |-------------------|------------------------------------------------------------|
     | `GITHUB_TOKEN`    | Default GitHub Actions token (auto-provided)               |
 
-    > These secrets will be available inside your workflows as $GITHUB_ENV, $GITHUB_TOKEN, or ${{ secrets.YOUR_SECRET_NAME }}.
+    > These secrets will be available inside your workflows as $GITHUB_ENV, $GITHUB_TOKEN, or ${{ '{{' }} secrets.YOUR_SECRET_NAME {{ '}}' }}.
 
 ### CI/CD with GitHub Actions
 This project comes pre-configured with multiple GitHub Actions workflows located under `.github/workflows/`:
