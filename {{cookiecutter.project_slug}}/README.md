@@ -1,6 +1,7 @@
 # {{ cookiecutter.project_name }}
 
-Brief description of the application
+{{ cookiecutter.description }}
+
 
 ### Running the Application
 
@@ -19,101 +20,119 @@ To run the application this project offers several options:
     ```shell
     make run
     ```
+3. **Manually**: The application can be run via Python script entrypoint:
 
-## Project Setup and Tools
+    ```shell
+    python src/main.py
+    ```
 
-### Dependencies
+## Project Setup and Tooling
 
-* [Docker](https://docs.docker.com): Used to develop insider Docker development container and run several services in Docker Compose.
+### Prerequisites
+
+* [Docker](https://docs.docker.com): For containerized development and services
+* [Poetry](https://python-poetry.org/): Dependency and package management
+* [Make](https://makefiletutorial.com/): For automation (or use the commands manually)
 
 ### Environment setup
 
-First step is to clone the repository.
+1. Clone the repository:
 
 ```shell
 git clone https://github.com/fcolome14/{{cookiecutter.project_slug}}.git
+cd {{ cookiecutter.project_slug }}
 ```
 
-After having cloned the repo, there are 2 ways to manage the development environment:
+2. Environment Setup Options:
 
-* Use a devcontainer (preferred):
-  * Open the project in a development container with VSCode locally.
-  * Open the project in a development container with VSCode hosted on GitHub Codespaces.
-* Create a virtual environment and install Python packages:
+* Option 1: Use Devcontainer (Recommended):
+  * Open the project in VS Code with the Dev [Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+  * Or use GitHub Codespaces to launch the containerized environment online.
 
-> NOTE: The Python version used in this project is {{ cookiecutter.python_version }}
+* Option 2: Virtual Environment (Manual):
+```shell
+python -m venv .venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+poetry install --all-extras
+```
+
+> NOTE: Python version required: {{ cookiecutter.python_version }}
 
 ```shell
 python -m venv ./venv
 ```
 
-#### Poetry
+#### Managing Dependencies with Poetry
 
-To include a new package to the project it should be added to ``pyproject.toml`` under the correct group:
+To install all project dependencies:
 
-* Packages needed to run the applications should be under the ``tool.poetry.dependencies`` section.
-* Packages used as development tools such as ``pytest``, ``ruff`` or ``black`` belong to the ``tool.poetry.group.dev.dependencies`` section.
+```shell
+poetry install --all-extras
+```
 
-To add a package you can use ``poetry add``. You can indicate the group to add the dependency to with the option ``--group=GROUP``.
+To add or remove dependencies:
 
-To remove a package use ``poetry remove``.
+```shell
+poetry add <package_name> [--group dev]
+poetry remove <package_name>
+```
 
-##### poetry.lock
+To update the .lock file:
 
-The ``poetry.lock`` file contains a snapshot of the resolved dependencies from ``pyproject.toml``.
-
-To manually force the update of `poetry.lock` file, run ``poetry lock``. The ``--no-update`` flag can be used to avoid updating those dependencies which do not need to.
+```shell
+poetry lock [--no-update]
+```
 
 ### Notebooks
 
-You can start a local notebook or jupyter lab server with:
+Launch Jupyter Notebooks in your environment:
 
 ```shell
 make jupyter
 ```
 
-### Passwords
-
-Some applications connect to any third-party service (for example a SQL server) requiring
-a user name and a password.
-
-This kind of information shall be never be hardcoded in the code or saved in any configuration
-file that may be uploaded to the repository.
+### Environment Variables & Secrets
 
 A simple way to handle critical data is saving them as environment variables.
 
-Simply create a `.env` file at the root of the repository. Then and save user names and passwords
-like:
+Create a .env file at the root to store secrets and configuration:
 
 ```shell
 YOUR_USERNAME=your_username
 YOUR_PASSWORD=your_password
+ANY_OTHER_SECRET=other_secret
 ```
+> .env is automatically excluded from Git via .gitignore.
+> Load it in Python with the python-dotenv package.
 
-You can then read `.env` files for Python code with the `dotenv` package.
 
-`.env` files are excluded from the Git repository in the `.gitignore` file.
+### Running Tests
 
-### Testing
-
-To verify correct installation, execute the {{cookiecutter.project_name}} tests by running the following command in your Python environment:
+Basic (unit + integration):
 
 ```shell
 make tests-basic
 ```
 
-If you want to run all tests, that will require using Docker Compose:
+Full test suite (including E2E via Docker):
 
+```shell
+make tests
+```
 
 ### Generate documentation
 
-Run the following command to generate project documentation:
+Build HTML docs locally using:
 
 ```shell
 make docs
 ```
+Output will be generated in the docs/build/ folder.
 
 ## Contributors
 
 * {{cookiecutter.author}} ([{{cookiecutter.email}}](mailto:{{cookiecutter.email}}))
 
+## License
+
+This project is licensed under the {{ cookiecutter.license }} license.
