@@ -7,6 +7,8 @@ def move_project_contents_to_parent():
     project_dir = Path.cwd()
     project_name = "{{ cookiecutter.project_slug }}"
     subfolder_path = project_dir / project_name
+    print(f"project_dir: '{project_dir}'")
+    print(f"subfolder_path: '{subfolder_path}'")
 
     # Ensure the subfolder exists
     if not subfolder_path.exists() or not subfolder_path.is_dir():
