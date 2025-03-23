@@ -125,12 +125,6 @@ Cookiecutter API Template/
 │   ├── unit/                            # Unit tests (test individual functions/classes)
 │   ├── conftest.py                      # Pytest fixtures and test configuration
 │
-├── data/                                # Local data storage (typically ignored in version control)
-│   ├── raw/                             # Original, unmodified datasets
-│   ├── processed/                       # Finalized, cleaned datasets for modeling or use
-│   ├── interim/                         # Intermediate datasets (e.g., partially cleaned)
-│   ├── external/                        # Data obtained from third-party APIs or services
-│
 ├── README.md                            # Project overview and usage instructions
 ├── .gitignore                           # Ignore files/folders in Git version control
 ├── Makefile                             # Common development commands (e.g., test, lint, run)
