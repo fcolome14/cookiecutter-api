@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 def move_project_contents_to_parent():
-    project_dir = Path.cwd()
+    project_dir = Path.cwd().parent
     project_name = "{{ cookiecutter.project_slug }}"
     subfolder_path = project_dir / project_name
     print(f"project_dir: '{project_dir}'")
