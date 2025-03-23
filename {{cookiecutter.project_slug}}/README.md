@@ -7,7 +7,7 @@
 
 To run the application this project offers several options:
 
-1. **Docker Compose**: The application can be run in a containerized environment using Docker Compose:
+1. **Docker Compose**: The application can be run in a containerized environment:
 
     ```shell
     make deploy
@@ -18,11 +18,13 @@ To run the application this project offers several options:
     ```shell
     make run
     ```
+
 3. **Manually**: The application can be run via Python script entrypoint:
 
     ```shell
     python {{cookiecutter.project_slug.lower()}}/__main__.py
     ```
+
     or as a module:
 
     ```shell
@@ -57,14 +59,9 @@ cd {{ cookiecutter.project_slug }}
 ```shell
 python -m venv .venv
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
-poetry install --all-extras
 ```
 
 > NOTE: Python version required: {{ cookiecutter.python_version }}
-
-```shell
-python -m venv ./venv
-```
 
 #### Managing Dependencies with Poetry
 
@@ -85,6 +82,60 @@ To update the .lock file:
 
 ```shell
 poetry lock [--no-update]
+```
+
+### Database Migrations (Alembic)
+
+This project uses [Alembic](https://alembic.sqlalchemy.org/en/latest/)
+for managing database schema migrations. All Alembic commands are automated via make tasks.
+
+To initialize Alembic (only needed once, after project creation):
+
+```shell
+make alembic-init
+```
+
+To generate a new migration script based on model changes:
+
+```shell
+make alembic-new msg="your migration message"
+```
+
+> Replace "your migration message" with a short description, e.g. "add users table".
+
+To upgrade the database to the latest revision:
+
+```shell
+make alembic-up
+```
+
+To downgrade the last applied migration:
+
+```shell
+make alembic-down
+```
+
+Additional Commands:
+
+- Show current migration state:
+
+    ```shell
+    make alembic-current
+    ```
+
+- Show current migration state:
+
+    ```shell
+    make alembic-current
+     ```
+
+After running make `alembic-init`, you'll get:
+
+```
+alembic/
+├── env.py         # Config file to link with your models/Base
+├── versions/      # Folder for migration scripts
+alembic.ini        # Main Alembic config
 ```
 
 ### Notebooks

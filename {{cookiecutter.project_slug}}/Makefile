@@ -4,6 +4,7 @@ export JUPYTER_PLATFORM_DIRS=1
 
 # Marks tasks that are not actual files, just commands
 .PHONY: venv clean clean-build clean-pyc clean-test clean-docs clean-data lint tests tests-basic tests-metrics cov cov-basic docs dist install jupyter pre-commit format cruft
+.PHONY: alembic-init alembic-new alembic-up alembic-down alembic-current alembic-history
 
 # Suppresses command echoing for cleaner output when running task
 .SILENT: clean-build clean-pyc clean-test clean-docs clean-data clean-rej clean-ruff
@@ -21,6 +22,31 @@ venv:
 	$(POETRY) config virtualenvs.create false
 	$(POETRY) install --all-extras
 	pre-commit install
+	$(POETRY) run alembic init alembic
+
+alembic-init:
+	$(POETRY) run alembic init alembic
+
+# Create a new migration (pass message like: make alembic-new msg="init db")
+alembic-new:
+	@$(POETRY) run alembic revision --autogenerate -m "$(msg)"
+
+# Apply migrations
+alembic-up:
+	$(POETRY) run alembic upgrade head
+
+# Downgrade last migration
+alembic-down:
+	$(POETRY) run alembic downgrade -1
+
+# Show current migration state
+alembic-current:
+	$(POETRY) run alembic current
+
+# Show migration history
+alembic-history:
+	$(POETRY) run alembic history
+
 
 # Clean build artifacts, caches, etc.
 clean: clean-build clean-pyc clean-test clean-docs clean-data clean-rej clean-ruff
@@ -67,6 +93,7 @@ clean-rej:
 clean-ruff:
 	rm -rf .ruff_cache
 
+# Auto-run cleanup tasks
 dist: clean
 	$(POETRY) build -f wheel
 
