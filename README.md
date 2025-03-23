@@ -1,147 +1,216 @@
-# cookiecutter-api
+# {{ cookiecutter.project_name }}
 
-cookiecutter-api is a Cookiecutter template for quickly setting up a new project following best development practices.
+{{ cookiecutter.description }}
 
-## 📦 Features
 
-- Automatically generates a structured project API layout.
-- Customizable settings via `cookiecutter.json`.
-- Pre-configured for easy deployment and version control.
+### Running the Application
 
-## 🛠️ Installation
+To run the application this project offers several options:
 
-First, install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/):
+1. **Docker Compose**: The application can be run in a containerized environment:
 
-```sh
-pip install cookiecutter
+    ```shell
+    make deploy
+    ```
+
+2. **Devcontainer**: The application can be run within its own development container, locally or hosted on GitHub Codespaces:
+
+    ```shell
+    make run
+    ```
+
+3. **Manually**: The application can be run via Python script entrypoint:
+
+    ```shell
+    python {{cookiecutter.project_slug.lower()}}/__main__.py
+    ```
+
+    or as a module:
+
+    ```shell
+    python -m {{cookiecutter.project_slug.lower()}}
+    ```
+
+## Project Setup and Tooling
+
+### Prerequisites
+
+* [Docker](https://docs.docker.com): For containerized development and services
+* [Poetry](https://python-poetry.org/): Dependency and package management
+* [Make](https://makefiletutorial.com/): For automation (or use the commands manually)
+
+### Environment setup
+
+1. Clone the repository:
+
+```shell
+git clone https://github.com/fcolome14/{{cookiecutter.project_slug}}.git
+cd {{ cookiecutter.project_slug }}
 ```
 
-## 🚀 Usage
+2. Environment Setup Options:
 
-To create a new project based on this template:
+* Option 1: Use Devcontainer (Recommended):
+  * Open the project in VS Code with the Dev [Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+  * Or use GitHub Codespaces to launch the containerized environment online.
 
-```sh
-cookiecutter gh:fcolome14/cookiecutter-api
+* Option 2: Virtual Environment (Manual):
+
+```shell
+python -m venv .venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 ```
 
-You will be prompted to enter:
+> NOTE: Python version required: {{ cookiecutter.python_version }}
 
-- `project_name`
-- `project_slug`
-- `package_name`
-- `description`
-- `author`
-- `email`
-- `license`
+#### Managing Dependencies with Poetry
 
-## 📝 Customization
+To install all project dependencies:
 
-Modify `cookiecutter.json` to change default values according to your needs:
-
-```json
-{
-  "project_name": "Cookiecutter API Template",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
-  "package_name": "{{ cookiecutter.project_slug }}",
-  "version": "0.1.0",
-  "description": "Your description",
-  "author": "Lastname, Name",
-  "email": "your_email@gmail.com",
-  "license": "MIT",
-  "python_version": "3.10.7",
-  "cli_command": "{{ cookiecutter.project_slug.replace('_', '-') }}",
-  "use_jupyter": "y",
-  "use_dvc": "n",
-  "use_docker": "y"
-}
-
+```shell
+poetry install --all-extras
 ```
 
-This is a sample output of each project variable:
+To add or remove dependencies:
 
-
-| Variable          | Value                                               |
-|-------------------|-----------------------------------------------------|
-| `project_name`    | Data Science Project Template                       |
-| `project_slug`    | data_science_project_template                       |
-| `package_name`    | data_science_project_template                       |
-| `version`         | 0.1.0                                               |
-| `description`     | A reusable data science project template            |
-| `author`          | Colomé Sanz, Ferran                                 |
-| `email`           | ferrancolomsanz@gmail.com                           |
-| `license`         | MIT                                                 |
-| `python_version`  | 3.10.7                                              |
-| `cli_command`     | data-science-project-template                       |
-| `use_jupyter`     | Yes                                                 |
-| `use_dvc`         | No                                                  |
-| `use_docker`      | Yes                                                 |
-
-
-## 📂 Project Structure
-
-After generation, your project will have the following structure:
-
-```
-Cookiecutter API Template/
-│
-├── .devcontainer/                       # Configuration for VS Code Dev Containers (Docker-based)
-│   ├── devcontainer.json                # VS Code settings for running inside a container
-│   ├── docker-compose.yml               # Docker Compose services for development environment
-│   ├── Dockerfile                       # Dockerfile for the main development container
-│
-├── .github/
-│   ├── workflows/                       # GitHub Actions CI/CD workflows
-│   └── dependabot.yml                   # Automates dependency updates
-│
-├── .vscode/
-│   ├── extensions.json                  # Recommended extensions for VS Code
-│   ├── settings.json                    # Project-specific VS Code settings
-│
-├── cookiecutter_api_template/           # Main application package (use {{ cookiecutter.package_name }} in Cookiecutter)
-│   ├── api/                             # FastAPI route definitions and API logic
-│   ├── core/                            # Core business logic and shared functionality
-│   ├── database/                        # Database models, sessions, and migrations
-│   ├── locales/                         # Translations and internationalization files (i18n)
-│   ├── schemas/                         # Pydantic models (input/output validation schemas)
-│   ├── templates/                       # Jinja2 templates (e.g., for HTML responses or email)
-│   ├── utils/                           # Utility/helper functions
-│
-├── deployment/                          # Production deployment configuration
-│   ├── docker-compose.yml               # Docker Compose for production deployment
-│   ├── Dockerfile                       # Production Dockerfile
-│
-├── docs/                                # Project documentation
-│   └── Makefile                         # Build Sphinx docs locally using `make html`
-│
-├── logs/                                # Runtime logs (should be gitignored or rotated)
-│
-├── notebooks/                           # Jupyter notebooks for experiments, prototyping, or EDA
-│
-├── tests/                               # All test code
-│   ├── __init__.py
-│   ├── compose/                         # Docker Compose tests or integration with external services
-│   ├── e2e/                             # End-to-end tests (simulate real user behavior)
-│   ├── integration/                     # Tests between integrated components (e.g., API ↔ DB)
-│   ├── unit/                            # Unit tests (test individual functions/classes)
-│   ├── conftest.py                      # Pytest fixtures and test configuration
-│
-├── README.md                            # Project overview and usage instructions
-├── .gitignore                           # Ignore files/folders in Git version control
-├── Makefile                             # Common development commands (e.g., test, lint, run)
-├── .coveragerc                          # Coverage.py config for measuring test coverage
-├── .dockerignore                        # Files to exclude from Docker image build context
-├── .editorconfig                        # Code formatting consistency across editors
-├── LICENSE                              # Software license (e.g., MIT)
-├── babel.cfg                            # Babel translation config for i18n/l10n (used with Flask/FastAPI + Jinja)
-
+```shell
+poetry add <package_name> [--group dev]
+poetry remove <package_name>
 ```
 
-## 🔄 Updating the Template
+To update the .lock file:
 
-If you want to update the template, modify the files inside `cookiecutter-your_project_slug` and push changes to your repository.
+```shell
+poetry lock [--no-update]
+```
 
-## 📜 License
+### Database Migrations (Alembic)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project uses [Alembic](https://alembic.sqlalchemy.org/en/latest/)
+for managing database schema migrations. All Alembic commands are automated via make tasks.
 
-Author: Colomé Sanz, Ferran
+To initialize Alembic (only needed once, after project creation):
+
+```shell
+make alembic-init
+```
+
+To generate a new migration script based on model changes:
+
+```shell
+make alembic-new msg="your migration message"
+```
+
+> Replace "your migration message" with a short description, e.g. "add users table".
+
+To upgrade the database to the latest revision:
+
+```shell
+make alembic-up
+```
+
+To downgrade the last applied migration:
+
+```shell
+make alembic-down
+```
+
+Additional Commands:
+
+- Show current migration state:
+
+    ```shell
+    make alembic-current
+    ```
+
+- Show current migration state:
+
+    ```shell
+    make alembic-current
+     ```
+
+After running make `alembic-init`, you'll get:
+
+```
+alembic/
+├── env.py         # Config file to link with your models/Base
+├── versions/      # Folder for migration scripts
+alembic.ini        # Main Alembic config
+```
+
+### Notebooks
+
+Launch Jupyter Notebooks in your environment:
+
+```shell
+make jupyter
+```
+
+### Environment Variables & Secrets
+
+A simple way to handle critical data is saving them as environment variables.
+
+Create a .env file at the root to store secrets and configuration:
+
+```shell
+YOUR_USERNAME=your_username
+YOUR_PASSWORD=your_password
+ANY_OTHER_SECRET=other_secret
+```
+> .env is automatically excluded from Git via .gitignore.
+> Load it in Python with the python-dotenv package.
+
+#### GitHub Secrets (Environment Variables)
+To keep sensitive configuration values secure (like API keys or tokens), define GitHub secrets:
+1. Go to {{ cookiecutter.project_name }} GitHub repo: Settings → Secrets and variables → Actions
+2. Click "New repository secret"
+1. Add the required variables, for example:
+
+    | Name              | Purpose                                                    |
+    |-------------------|------------------------------------------------------------|
+    | `GITHUB_TOKEN`    | Default GitHub Actions token (auto-provided)               |
+
+    > These secrets will be available inside your workflows as $GITHUB_ENV, $GITHUB_TOKEN, or ${{ '{{' }} secrets.YOUR_SECRET_NAME {{ '}}' }}.
+
+### CI/CD with GitHub Actions
+This project comes pre-configured with multiple GitHub Actions workflows located under `.github/workflows/`:
+
+| Workflow          | Description                                                           |
+|-------------------|-----------------------------------------------------------------------|
+| `qa.yml`          | Runs tests and linting on every push to validate code quality         |
+| `pre-release.yml` | Optional tasks before creating a release (e.g., check changelog, bump)|
+| `post-release.yml`| Runs after a release is published (e.g., deploy docs, update tags)    |
+
+> These workflows are triggered automatically when changes are pushed to the main branch,
+>or tags/releases are created.
+
+### Running Tests
+
+Basic (unit + integration):
+
+```shell
+make tests-basic
+```
+
+Full test suite (including E2E via Docker):
+
+```shell
+make tests
+```
+
+### Generate documentation
+
+Build HTML docs locally using:
+
+```shell
+make docs
+```
+Output will be generated in the docs/build/ folder.
+
+## Contributors
+
+* {{cookiecutter.author}} ([{{cookiecutter.email}}](mailto:{{cookiecutter.email}}))
+
+## License
+
+This project is licensed under the {{ cookiecutter.license }} license.
